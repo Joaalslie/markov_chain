@@ -1,18 +1,34 @@
 #include <stdio.h>
 #include <json-c/json.h>
+#include <math.h>
 
 #include "markov_chain.h"
 
-int verify_matrix(size_t n_elems, double dimmensions){
+void verify_matrix(int n_elems, int dimmensions, double *matrix){
 
-    double number = (double)n_elems;
+    printf("Verifying markov chain/matrix..\n");
+    int i, j;
+    double sum = 0;
+    int d = dimmensions * dimmensions;
 
-    if(number != dimmensions){
-        return -1;
+    if(n_elems != d){
+        printf("ERROR! matrix must be squared!\n");
+        exit(0);
     }
     else{
-        return 1;
+        for(i = 0; i < n_elems; i+=dimmensions){
+            for(j = i; j < (i + dimmensions); j++){
+                sum += matrix[j];
+            }
+            if(sum != 1){
+                printf("ERROR! The sum of a row int he matrix must always be zero!\n");
+                exit(0);
+            } else{
+                sum = 0;
+            }
+        }
     }
+    printf("Matrix verified! no errors detected!\n");
 }
 
 int main(int argc, char **argv){
@@ -59,9 +75,6 @@ int main(int argc, char **argv){
     for(int j = 0; j < n_elems; j++){
         printf("%d : %f\n", j+1, elements[j]);
     }
-    if(verify_matrix(n_elems, dim_num_d) == -1){
-        printf("Error! verify_matrix returned -1\n");
-        exit(0);
-    }
+    verify_matrix((int)n_elems, (int)dim_num_d, elements);
 
 }
