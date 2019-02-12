@@ -1,6 +1,8 @@
-#include <stdio.h>
 #include <json-c/json.h>
+#include <unistd.h> // for using atoi() to convert char to int
+#include <stdio.h>
 #include <math.h>
+
 
 #include "markov_chain.h"
 
@@ -19,7 +21,7 @@ void verify_matrix(int n_elems, int dimmensions, double *matrix){
 
     // Checks if the squared dimmension-number of the matrix is equal to it's elements
     if(n_elems != d){
-        printf("ERROR! matrix must be squared!\n");
+        printf("ERROR! matrix must be squared!\nIf the matrix is squared, check that the you have set the correct dimmension value!\n");
         exit(0);
     }
     else{
@@ -133,4 +135,8 @@ int main(int argc, char **argv){
     // Parse the json-file, adding the elements from the
     // array in the file, to the newly allocated array/matrix
     parse_matrix(argv[1], dimmensions, matrix);
+
+    discrete_chain_t *chain = chain_create(matrix, dimmensions);
+
+    chain_destroy(chain);
 }
