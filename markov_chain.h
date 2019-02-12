@@ -11,12 +11,11 @@ struct discrete_chain;
 typedef struct discrete_chain discrete_chain_t;
 
 
-
 /*
  * The chain is created based on a file sent in, which is
  * opened and parsed. A suitable format may be the JSON-format.
  */
-discrete_chain_t *chain_create(char *file);
+discrete_chain_t *chain_create(double *matrix, int num_dim);
 
 /*
  * The chain is destroyed, freeing all allocations from memory.
