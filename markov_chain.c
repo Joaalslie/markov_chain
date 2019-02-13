@@ -97,6 +97,7 @@ discrete_chain_t *chain_create(double *matrix, int num_dim){
         }
     }
     print_chain(chain);
+    return chain;
 }
 
 void chain_destroy(discrete_chain_t *chain){
@@ -104,10 +105,7 @@ void chain_destroy(discrete_chain_t *chain){
 
     for(i = 0; i < chain->num_dim; i++){
         for(j = 0; j < chain->num_dim; j++){
-            printf("1\n"); 
-            printf("i: %d, j: %d\n", i, j);
             free(chain->node_array[i]->pointer_array[j]);
-            printf("2\n");
         }
         free(chain->node_array[i]->pointer_array);
         free(chain->node_array[i]);
