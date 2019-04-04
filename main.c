@@ -42,7 +42,7 @@ void verify_matrix(int n_elems, int dimmensions, double *matrix){
         }
     }
     // Reaching this spot means no errors was detected.
-    printf("Matrix verified! no errors detected!\n");
+    printf("Matrix verified! no errors detected!\n\n");
 }
 
 /*
