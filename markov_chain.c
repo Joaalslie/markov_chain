@@ -19,20 +19,18 @@ struct discrete_chain{
     list_t *transition_list; 
 };
 
-int verify_nodes(discrete_chain_t *chain){
-    // checks if the sum of the probabilities in a node is equal to one, for every node in the chain.
+/*
+ * Performs a transition in the markov chain. The current pointer is moved to a new state
+ * based on the probabilities of transition in the current node.
+ */
+node_t *transition(node_t *node, discrete_chain_t *chain){
 
 }
 
 /*
- * Checks wether the given id is the id of an existing node in the given chain.
- * Returns a positive integer if so, returns zero if not.
+ * Writes the resulting transitions in order to a file.
  */
-int node_exists(discrete_chain_t *chain, int id){
-
-}
-
-node_t *transition(node_t *node, discrete_chain_t *chain){
+void write_to_file(discrete_chain_t *chain, char *filename){
 
 }
 
@@ -50,6 +48,7 @@ void print_chain(discrete_chain_t *chain){
             printf("node nr. %d, to node nr %d, probability: %lf\n", node_nr, path_nr, prob);
         }
     }
+    printf("Number of transitions: %d\n\n", list_size(chain->transition_list));
 }
 
 discrete_chain_t *chain_create(double *matrix, int num_dim){
@@ -90,16 +89,17 @@ discrete_chain_t *chain_create(double *matrix, int num_dim){
         }
     }
 
-    // This nested loop goes puts the correct weith to the correct path in the markov chain created
+    // This nested loop puts the correct weith to the correct path in the markov chain created
     for(node_nr = 0, i = 0; i < n_elems; i+=num_dim, node_nr++){
         for(j = i, path_nr = 0; j < (i + num_dim); j++, path_nr++){
             chain->node_array[node_nr]->pointer_array[path_nr]->weight = matrix[j];
             chain->node_array[node_nr]->pointer_array[path_nr]->node_pointer = chain->node_array[j];
         }
     }
-    print_chain(chain);
-
     chain->transition_list = list_create();
+
+    verify_chain(chain);
+    print_chain(chain);
 
     return chain;
 }
@@ -118,12 +118,23 @@ void chain_destroy(discrete_chain_t *chain){
     free(chain);
 }
 
-void write_to_file(discrete_chain_t *chain, char *filename){
-
-}
-
 int verify_chain(discrete_chain_t *chain){
+    int i, j;
+    double sum = 0;
 
+    printf("Verifying markov chain structure..\n");
+    for(i = 0; i < chain->num_dim; i++){
+        sum = 0;
+        for(j = 0; j < chain->num_dim; j++){
+            sum += chain->node_array[i]->pointer_array[j]->weight;
+        }
+        if((sum - 1.000) > 0.001 || (sum - 1.000) < -0.001){
+            printf("Error received when validating the markov chain structure!\n");
+            printf("Sum of probabilities in node %d is not 1\n Sum: %lf", i, sum);
+            exit(0);
+        }
+    }
+    printf("Markov chain verified. No errors detected!\n\n");
 }
 
 
