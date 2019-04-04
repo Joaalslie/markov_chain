@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "markov_chain.h"
+#include "list.h"
 
 struct node{
     int id;
@@ -15,7 +16,7 @@ struct pointer{
 struct discrete_chain{
     int num_dim; 
     node_t **node_array; // All nodes in the given chain (should be sorted by id number)
-    // list_t *transition_list; //try array?
+    list_t *transition_list; 
 };
 
 int verify_nodes(discrete_chain_t *chain){
@@ -97,6 +98,9 @@ discrete_chain_t *chain_create(double *matrix, int num_dim){
         }
     }
     print_chain(chain);
+
+    chain->transition_list = list_create();
+
     return chain;
 }
 
