@@ -15,7 +15,8 @@ struct pointer{
 
 struct discrete_chain{
     int num_dim; 
-    node_t **node_array; // All nodes in the given chain (should be sorted by id number)
+    int current_node;        //Id of the current node pointing at
+    node_t **node_array; 
     list_t *transition_list; 
 };
 
@@ -48,10 +49,11 @@ void print_chain(discrete_chain_t *chain){
             printf("node nr. %d, to node nr %d, probability: %lf\n", node_nr, path_nr, prob);
         }
     }
+    printf("Current node/Starting node: %d\n", chain->current_node);
     printf("Number of transitions: %d\n\n", list_size(chain->transition_list));
 }
 
-discrete_chain_t *chain_create(double *matrix, int num_dim){
+discrete_chain_t *chain_create(double *matrix, int num_dim, int start){
     int i, j, path_nr, node_nr, n_elems;
 
     n_elems = num_dim * num_dim;
@@ -98,6 +100,8 @@ discrete_chain_t *chain_create(double *matrix, int num_dim){
     }
     chain->transition_list = list_create();
 
+    chain->current_node = start;
+
     verify_chain(chain);
     print_chain(chain);
 
@@ -135,6 +139,11 @@ int verify_chain(discrete_chain_t *chain){
         }
     }
     printf("Markov chain verified. No errors detected!\n\n");
+
+    /* 
+     * Possible extension: Transition through the chain and check if the 
+     * transitions correspond to the correct id's 
+     */
 }
 
 

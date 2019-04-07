@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <math.h>
 
-
 #include "markov_chain.h"
 
 #define BUFFER_SIZE 2048
@@ -114,12 +113,33 @@ int parse_matrix_dimmensions(char *filename){
     return dim_num;
 }
 
+int parse_start_node(char * filename){
+    struct json_object *parsed_json;
+    struct json_object *start;
+    char buffer[BUFFER_SIZE];
+    int start_node;
+    FILE *fp;
+
+    // Open and read the file, putting the info in a buffer.
+    fp = fopen(filename, "r");
+    fread(buffer, BUFFER_SIZE, 1, fp);
+    fclose(fp);
+
+    // Parses the buffer into a json-struct 
+    parsed_json = json_tokener_parse(buffer);
+    // Retrieves the number of dimmensions in the matrix to a json-struct
+    json_object_object_get_ex(parsed_json, "start", &start);
+
+    start_node = json_object_get_int(start);
+    return start_node;
+}
+
 int main(int argc, char **argv){
 
-    int num_elems, dimmensions;
+    int num_elems, dimmensions, start_node;
 
-    if(argc < 2 && argc > 2){
-        printf("Include only one json file to parse as a chain as argument\n");
+    if(argc < 2 || argc > 2){
+        printf("Error! Include ONE json file to parse as a chain as argument\n");
         exit(0);
     }
 
@@ -129,6 +149,8 @@ int main(int argc, char **argv){
     // Calculate the correct number of elements
     num_elems = dimmensions * dimmensions;
 
+    start_node = parse_start_node(argv[1]);
+
     // Allocate memory for the array/matrix
     double *matrix = malloc(sizeof(double) * num_elems);
     
@@ -136,7 +158,7 @@ int main(int argc, char **argv){
     // array in the file, to the newly allocated array/matrix
     parse_matrix(argv[1], dimmensions, matrix);
 
-    discrete_chain_t *chain = chain_create(matrix, dimmensions);
+    discrete_chain_t *chain = chain_create(matrix, dimmensions, start_node);
 
     chain_destroy(chain);
 }
