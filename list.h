@@ -41,8 +41,7 @@ int list_size(list_t *list);
 
 /*
  * List iterator interface
- */
- 
+ */ 
 struct list_iterator;
 typedef struct list_iterator list_iterator_t;
 
