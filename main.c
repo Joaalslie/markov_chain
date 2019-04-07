@@ -11,11 +11,11 @@
  * Verifies the matrix, printing errors and exiting the program 
  * if there is a problem.
  */
-void verify_matrix(int n_elems, int dimmensions, double *matrix){
+void verify_matrix(int n_elems, int dimmensions, float *matrix){
 
     printf("Verifying markov chain/matrix..\n");
     int i, j;
-    double sum = 0.0;
+    float sum = 0.0;
     int d = dimmensions * dimmensions;
 
     // Checks if the squared dimmension-number of the matrix is equal to it's elements
@@ -30,7 +30,7 @@ void verify_matrix(int n_elems, int dimmensions, double *matrix){
             for(j = i; j < (i + dimmensions); j++){
                 sum += matrix[j];
             }
-            // Need to compare, to a value close to zero, since it's hard to compare exact doubles..
+            // Need to compare, to a value close to zero, since it's hard to compare exact floats..
             if((sum - 1.000) > 0.001 || (sum - 1.000) < -0.001){
                 printf("ERROR! The sum of a row in the matrix must always be 1.0!\n");
                 exit(0);
@@ -48,7 +48,7 @@ void verify_matrix(int n_elems, int dimmensions, double *matrix){
  * Parses the given json-file and fills up the given array/matrix with
  * elements in the order given in the json-file. Also calls to verify the array. 
  */
-void parse_matrix(char *filename, int dimmension_size, double *elements){
+void parse_matrix(char *filename, int dimmension_size, float *elements){
 
     struct json_object *parsed_json;
     struct json_object *matrix;
@@ -80,7 +80,7 @@ void parse_matrix(char *filename, int dimmension_size, double *elements){
         // Retrieves the element on the indexed spot in the array
         // Then passes it to the allocated array given in the function call
         elem = json_object_array_get_idx(matrix, i);
-        elements[i] = json_object_get_double(elem);
+        elements[i] = (float)json_object_get_double(elem);
     }
     // Verifies the array
     verify_matrix((int)n_elems, dimmension_size, elements);    
@@ -149,10 +149,11 @@ int main(int argc, char **argv){
     // Calculate the correct number of elements
     num_elems = dimmensions * dimmensions;
 
+    // Parse the file, finding the node the process starts at
     start_node = parse_start_node(argv[1]);
 
     // Allocate memory for the array/matrix
-    double *matrix = malloc(sizeof(double) * num_elems);
+    float *matrix = malloc(sizeof(float) * num_elems);
     
     // Parse the json-file, adding the elements from the
     // array in the file, to the newly allocated array/matrix

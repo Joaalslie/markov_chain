@@ -10,12 +10,12 @@ struct node{
 
 struct pointer{
     node_t *node_pointer;
-    double weight;
+    float weight;
 };
 
 struct discrete_chain{
     int num_dim; 
-    int current_node;        //Id of the current node pointing at
+    int current_node;        //ID of the current node pointing at
     node_t **node_array; 
     list_t *transition_list; 
 };
@@ -41,7 +41,7 @@ void write_to_file(discrete_chain_t *chain, char *filename){
  */
 void print_chain(discrete_chain_t *chain){
     int node_nr, path_nr, i, j;
-    double prob;
+    float prob;
 
     for(node_nr = 0; node_nr < chain->num_dim; node_nr++){
         for(path_nr = 0; path_nr < chain->num_dim; j++, path_nr++){
@@ -53,7 +53,7 @@ void print_chain(discrete_chain_t *chain){
     printf("Number of transitions: %d\n\n", list_size(chain->transition_list));
 }
 
-discrete_chain_t *chain_create(double *matrix, int num_dim, int start){
+discrete_chain_t *chain_create(float *matrix, int num_dim, int start){
     int i, j, path_nr, node_nr, n_elems;
 
     n_elems = num_dim * num_dim;
@@ -124,7 +124,7 @@ void chain_destroy(discrete_chain_t *chain){
 
 int verify_chain(discrete_chain_t *chain){
     int i, j;
-    double sum = 0;
+    float sum = 0;
 
     printf("Verifying markov chain structure..\n");
     for(i = 0; i < chain->num_dim; i++){
@@ -140,9 +140,15 @@ int verify_chain(discrete_chain_t *chain){
     }
     printf("Markov chain verified. No errors detected!\n\n");
 
+    // Possible extensions:
+
     /* 
-     * Possible extension: Transition through the chain and check if the 
-     * transitions correspond to the correct id's 
+     * Transition through the chain and check if the 
+     * transitions correspond to the correct IDs. 
+     */
+
+    /*
+     * Check if the ID corresponds to the index in the array of nodes
      */
 }
 
