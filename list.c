@@ -195,6 +195,7 @@ void print_list(list_t *list, int length)
 
 	list_iterator_t *iter = list_createiterator(list);
 
+	printf("Printing transition log..\n");
 	// Iterate over the chains list, printing out number of elements
 	for (i = 0; i < length; i++)
 	{
@@ -205,6 +206,7 @@ void print_list(list_t *list, int length)
 		}
 		printf("%d\n", elem);
 	}
+	printf("Done!\n");
 
 	list_destroyiterator(iter);
 }
