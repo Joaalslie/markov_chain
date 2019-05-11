@@ -200,10 +200,8 @@ void print_list(list_t *list, int length)
 	for (i = 0; i < length; i++)
 	{
 		elem = list_next(iter);
-		if (!elem)
-		{
+		if(elem < 0)
 			break;
-		}
 		printf("%d\n", elem);
 	}
 	printf("Done!\n");
