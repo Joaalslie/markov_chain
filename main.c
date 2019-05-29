@@ -1,9 +1,7 @@
-#include <json-c/json.h>
-#include <unistd.h> // for using atoi() to convert char to int
 #include <stdio.h>
 #include <math.h>
-
 #include <time.h>
+#include <stdlib.h>
 
 #include "markov_chain.h"
 #include "json_parser.h"
