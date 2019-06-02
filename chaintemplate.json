@@ -1,0 +1,13 @@
+{
+    "_comment1": "num_dim is the dimmention size 'x' of the x*x matrix",
+    "num_dim": 3,
+  
+    "_comment2": "the matrix is written as an array and must contain x*x elements",
+    "_comment3": "Also note that the sum of each row must always be one",
+    "matrix": [0.0, 1.0, 0.0, 
+               0.0, 0.0, 1.0, 
+               1.0, 0.0, 0.0],
+  
+    "_comment4": "an integer showing the node the process starts at (x0)",
+    "start": 0
+  }
