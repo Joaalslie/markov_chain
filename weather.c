@@ -6,18 +6,30 @@
 #include "markov_chain.h"
 #include "json_parser.h"
 
-void parse(char *buffer, int val)
+void parse(int val)
 {
+    printf("Value: %d\n", val);
+    printf("The weather today is: ");
     switch(val)
     {
         case 0:
-            // Weather is sunny.
+            // It's sunny..
+            printf("Sunny!\n");
+            break;
 
         case 1:
-            // Weather is cloudy.
+            // It's clouded..
+            printf("Clouded!\n");
+            break;
 
         case 2:
-            // Weather is rainy.
+            // It's raining..
+            printf("Raining!\n");
+            break;
+        
+        default:
+            printf("ERROR! Invalid value!\n");
+            exit(0);
     }   
 }
 
@@ -25,9 +37,8 @@ int main(int argc, char **argv)
 {
     int num_elems, dimmensions, start_node;
     discrete_chain_t *chain;
-    char buffer[20];
+    char scan[10];
     float *matrix;
-    char scan;
     time_t t;
 
     if (argc < 2 || argc > 2)
@@ -37,6 +48,11 @@ int main(int argc, char **argv)
     }
     // Retrieve the number of dimmensions in the matrix
     dimmensions = parse_matrix_dimmensions(argv[1]);
+    if(dimmensions != 3)
+    {
+        printf("Error! The matrix needs to have three dimmensional!\n");
+        exit(0);
+    }
 
     // Calculate the correct number of elements
     num_elems = dimmensions * dimmensions;
@@ -56,17 +72,14 @@ int main(int argc, char **argv)
     // initiate randomization
     srand((unsigned long)time(&t));
 
-    printf("To exit, type: X\n");
-    parse(buffer, get_current_node(chain));
-    printf("Initially, the weather is: %s\n", buffer);
+    printf("To exit, type: X\n\n");
     while(1)
     {
+        parse(get_current_node(chain));
         printf("Press ENTER to transition..\n");
-        scanf("%c", scan);
-        if(scan == 'X')
+        scanf("%s", scan);
+        if(scan[0] == 'X' && scan[1] == '\0')
             break;
         transition(chain);
-        parse(buffer, get_current_node(chain));
-        printf("The weather today is: %s\n", buffer);
     }
 }
