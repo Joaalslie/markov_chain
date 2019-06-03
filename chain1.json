@@ -1,12 +1,12 @@
 {
-    "_comment1": "num_dim is the dimmention size 'x' of the x*x matrix",
-    "num_dim" : 3,
+  "_comment1": "num_dim is the dimmention size 'x' of the x*x matrix",
+  "num_dim": 3,
 
-    "_comment2": "the matrix is written as an array and must contain x*x elements",
-    "matrix" :  [0.1, 0.6, 0.3, 
-                 0.5, 0.0, 0.5,
-                 0.0, 0.3, 0.7],
-    
-    "_comment3" : "an integer showing the node the process starts at (x0)",
-    "start" : 0 
-}  
+  "_comment2": "the matrix is written as an array and must contain x*x elements",
+  "matrix": [0.1, 0.6, 0.3, 
+             0.5, 0.0, 0.5, 
+             0.0, 0.3, 0.7],
+
+  "_comment3": "an integer showing the node the process starts at (x0)",
+  "start": 0
+}
