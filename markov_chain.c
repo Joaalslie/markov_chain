@@ -28,6 +28,9 @@ struct discrete_chain
     list_t *transition_list;
 };
 
+/*
+ * Generates a random number from zero to the given maximum value.
+ */
 unsigned long generate_random_number(unsigned long max)
 {
     return (rand() % max);
@@ -93,21 +96,20 @@ node_t *transition(discrete_chain_t *chain)
     chain->transition_number++;
 }
 
+/*
+ * Returns the current node the given chain is on.
+ */
 int get_current_node(discrete_chain_t *chain)
 {
     return chain->current_node;
 }
 
+/*
+ * Returns the list of all transitions from the given chain.
+ */
 list_t *get_transition_list(discrete_chain_t *chain)
 {
     return chain->transition_list;
-}
-
-/*
- * Writes the resulting transitions in order to a file.
- */
-void write_to_file(discrete_chain_t *chain, char *filename)
-{
 }
 
 /*
@@ -198,6 +200,9 @@ discrete_chain_t *chain_create(float *matrix, int num_dim, int start)
     return chain;
 }
 
+/*
+ * Destroys the given chain, freeing all allocated memory.
+ */
 void chain_destroy(discrete_chain_t *chain)
 {
     int i, j, path_nr, node_nr, n_elems;
@@ -215,6 +220,9 @@ void chain_destroy(discrete_chain_t *chain)
     free(chain);
 }
 
+/*
+ * Verifies the chain, checking if it is correctly set up.
+ */
 int verify_chain(discrete_chain_t *chain)
 {
     int i, j;
@@ -249,6 +257,9 @@ int verify_chain(discrete_chain_t *chain)
      */
 }
 
+/*
+ * Calls on lists print-function to print all transitions done so far.
+ */
 void print_transition_list(discrete_chain_t *chain)
 {
     print_list(chain->transition_list, chain->transition_number);
