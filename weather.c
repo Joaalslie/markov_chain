@@ -6,6 +6,11 @@
 #include "markov_chain.h"
 #include "json_parser.h"
 
+/*
+ * Parses the value received and prints out a message based 
+ * on the value. The value is the node number which the chain
+ * transitioned to in the last transition.
+ */
 void parse(int val)
 {
     printf("Value: %d\n", val);
@@ -76,10 +81,13 @@ int main(int argc, char **argv)
     while(1)
     {
         parse(get_current_node(chain));
-        printf("Press ENTER to transition..\n");
+        printf("Press . then ENTER to transition..\n");
         scanf("%s", scan);
         if(scan[0] == 'X' && scan[1] == '\0')
             break;
         transition(chain);
     }
+
+    // Finally: Destroy the chain before exiting
+    chain_destroy(chain);
 }
