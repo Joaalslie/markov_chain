@@ -30,11 +30,7 @@ in the markov chain to a weather type, then makes transitions based on user inpu
 which the current state represents.
 
 ## Compiling
-Before compiling the program, install json-c-dev. </br>
-This can be done in Ubuntu with this command: </br>
-```
-$ sudo apt install libjson-c
-```
+Before compiling the program, make sure that json-c-dev is installed. </br>
 
 Use the following command to compile the main program:
 ```

@@ -51,6 +51,7 @@ int main(int argc, char **argv)
         printf("Error! Include ONE json file to parse as a chain as argument\n");
         exit(0);
     }
+    
     // Retrieve the number of dimmensions in the matrix
     dimmensions = parse_matrix_dimmensions(argv[1]);
     if(dimmensions != 3)
@@ -61,22 +62,16 @@ int main(int argc, char **argv)
 
     // Calculate the correct number of elements
     num_elems = dimmensions * dimmensions;
-
     // Parse the file, finding the node the process starts at
     start_node = parse_start_node(argv[1]);
-
     // Allocate memory for the array/matrix
     matrix = malloc(sizeof(float) * num_elems);
-
     // Parse the json-file, adding the elements from the
     // array in the file, to the newly allocated array/matrix
     parse_matrix(argv[1], dimmensions, matrix);
-
     chain = chain_create(matrix, dimmensions, start_node);
-
     // initiate randomization
     srand((unsigned long)time(&t));
-
     printf("To exit, type: X\n\n");
     while(1)
     {
@@ -88,6 +83,6 @@ int main(int argc, char **argv)
         transition(chain);
     }
 
-    // Finally: Destroy the chain before exiting
+    // Destroy the chain before exiting
     chain_destroy(chain);
 }
